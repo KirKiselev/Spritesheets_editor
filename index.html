@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="buttons_area">
+      <input type="file" id="fileInput" multiple onchange="toArrayBuffer()" />
+      <button onclick="convert()">Convert</button>
+      <button onclick="clearAuxillaryCanvas()">Clear</button>
+      <button onclick="addToMainCanvas()">Add to main</button>
+    </div>
+    <div id="animation_preview">
+      <canvas id="animation_canvas" width="100px" height="100px"></canvas>
+      <button onclick="startAnimation()">Start</button>
+      <button onclick="stopAnimation()">Stop</button>
+      <input id="time_between_frames" type="number" min="10" step="1" onchange="setTimeBetweenFrames()" />
+    </div>
+    <div id="frame_editor">
+      <button id="frame_editor_button_up" onclick="shiftFrameUp()">↑</button>
+      <button id="frame_editor_button_left" onclick="shiftFrameLeft()">←</button>
+      <button id="frame_editor_button_close" onclick="closeFrameEditor()">X</button>
+      <button id="frame_editor_button_right" onclick="shiftFrameRight()">→</button>
+      <button id="frame_editor_button_down" onclick="shiftFrameDown()">↓</button>
+    </div>
+    <canvas id="auxillary_canvas"></canvas>
+    <div id="main_canvas_wrapper">
+      <canvas id="main_canvas"></canvas>
+      <div id="spritesheets_labels"></div>
+    </div>
+  </body>
+  <script src="./converter.js"></script>
+  <script src="./auxillaryCanvas.js"></script>
+  <script src="./mainCanvas.js"></script>
+  <script src="./animationPreview.js"></script>
+  <script src="./main.js"></script>
+</html>

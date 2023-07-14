@@ -1,0 +1,112 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+#image_area {
+  width: 400px;
+  height: 100px;
+  border: 1px solid black;
+}
+
+#buttons_area {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+#buttons_area > * {
+  margin: 5px;
+}
+
+#auxillary_canvas {
+  display: block;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+#animation_preview {
+  position: absolute;
+  top: 100px;
+  left: 450px;
+  border: 1px solid black;
+}
+
+#animation_canvas {
+  display: block;
+  margin: 5px;
+  border: 1px solid black;
+}
+
+#frame_editor {
+  position: absolute;
+  top: 140px;
+  left: 16px;
+  width: 68px;
+  height: 68px;
+  visibility: collapse;
+}
+
+#frame_editor_button_up {
+  display: block;
+  margin-left: 24px;
+  margin-bottom: 4px;
+  width: 20px;
+  height: 20px;
+}
+
+#frame_editor_button_right {
+  width: 20px;
+  height: 20px;
+}
+
+#frame_editor_button_down {
+  width: 20px;
+  height: 20px;
+  margin-left: 24px;
+  margin-top: 4px;
+}
+
+#frame_editor_button_left {
+  width: 20px;
+  height: 20px;
+}
+
+#frame_editor_button_close {
+  width: 20px;
+  height: 20px;
+  background-color: lightcoral;
+}
+
+#main_canvas_wrapper {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid green;
+}
+
+#main_canvas {
+  border: 1px solid black;
+  margin: 10px;
+}
+
+#spritesheets_labels {
+  position: relative;
+  margin: 10px;
+  width: 60px;
+  border: 1px solid green;
+}
+
+.label {
+  position: relative;
+}
+
+.label:first-child {
+  background-color: lightgreen;
+}
+
+.label:last-child {
+  margin-left: 5px;
+  background-color: lightcoral;
+}
