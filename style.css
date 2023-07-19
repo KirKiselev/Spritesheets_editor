@@ -32,6 +32,7 @@
   top: 100px;
   left: 450px;
   border: 1px solid black;
+  z-index: 1;
 }
 
 #animation_canvas {
@@ -83,7 +84,6 @@
 #main_canvas_wrapper {
   display: flex;
   flex-direction: row;
-  border: 1px solid green;
 }
 
 #main_canvas {
@@ -95,18 +95,17 @@
   position: relative;
   margin: 10px;
   width: 60px;
-  border: 1px solid green;
 }
 
 .label {
   position: relative;
 }
 
-.label:first-child {
+.label_edit {
   background-color: lightgreen;
 }
 
-.label:last-child {
+.label_delete {
   margin-left: 5px;
   background-color: lightcoral;
 }

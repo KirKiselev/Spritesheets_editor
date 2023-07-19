@@ -73,6 +73,7 @@ function clearAuxillaryCanvas() {
 function setFrameToEdit(e) {
   if (currentSpriteSheetProperties.frames != undefined) {
     frameEditor_frameNumber = Math.floor(e.offsetX / currentSpriteSheetProperties.frameWidth);
+    frameEditor.style.top = 140 + currentSpriteSheetProperties.frameHeight + "px";
     frameEditor.style.left = currentSpriteSheetProperties.frameWidth * frameEditor_frameNumber + "px";
     frameEditor.style.visibility = "visible";
   }
@@ -135,4 +136,8 @@ function shiftFrameLeft() {
   frameData.data[end - 1] = 0;
 
   ctxAux.putImageData(frameData, currentSpriteSheetProperties.frameWidth * frameEditor_frameNumber, 0);
+}
+
+function showAxis() {
+  return;
 }

@@ -5,6 +5,29 @@ let ctxAnimation = animationCanvas.getContext("2d");
 let frameNumber;
 let timeBetweenFrames = 80;
 
+let animationPreview = document.getElementById("animation_preview");
+animationPreview.dragCorrection = { x: 0, y: 0 };
+animationPreview.dragInProgress = false;
+
+animationPreview.onmousedown = function (event) {
+  if (event.target === animationPreview) {
+    animationPreview.dragCorrection.x = event.pageX - animationPreview.offsetLeft;
+    animationPreview.dragCorrection.y = event.pageY - animationPreview.offsetTop;
+    animationPreview.dragInProgress = true;
+  }
+};
+
+animationPreview.onmousemove = function (event) {
+  if (animationPreview.dragInProgress === true) {
+    animationPreview.style.top = event.pageY - animationPreview.dragCorrection.y + "px";
+    animationPreview.style.left = event.pageX - animationPreview.dragCorrection.x + "px";
+  }
+};
+
+animationPreview.onmouseup = function (event) {
+  animationPreview.dragInProgress = false;
+};
+
 function startAnimation() {
   if (currentSpriteSheetProperties.frames != undefined) {
     drawAnimation();
