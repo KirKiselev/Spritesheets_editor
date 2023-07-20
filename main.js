@@ -61,3 +61,24 @@ function saveMainCanvas() {
 function loadMainCanvas() {
   return;
 }
+
+document.addEventListener("mousedown", (event) => {
+  if (event.target.classList.contains("dragable")) {
+    event.target.dragCorrection_x = event.pageX - event.target.offsetLeft;
+    event.target.dragCorrection_y = event.pageY - event.target.offsetTop;
+    event.target.dragInProgress = true;
+  }
+});
+
+document.addEventListener("mousemove", (event) => {
+  if (event.target.classList.contains("dragable") && event.target.dragInProgress === true) {
+    event.target.style.top = event.pageY - event.target.dragCorrection_y + "px";
+    event.target.style.left = event.pageX - event.target.dragCorrection_x + "px";
+  }
+});
+
+document.addEventListener("mouseup", (event) => {
+  if (event.target.classList.contains("dragable")) {
+    event.target.dragInProgress = false;
+  }
+});

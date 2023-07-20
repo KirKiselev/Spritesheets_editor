@@ -1,8 +1,12 @@
 let auxillaryCanvas = document.getElementById("auxillary_canvas");
+let auxillarySubcanvas = document.getElementById("auxillary_subcanvas");
 let ctxAux = auxillaryCanvas.getContext("2d");
+let ctxSubAux = auxillarySubcanvas.getContext("2d");
+
 auxillaryCanvas.addEventListener("click", (e) => {
   setFrameToEdit(e);
 });
+
 let frameEditor = document.getElementById("frame_editor");
 let frameEditor_frameNumber = 0;
 
@@ -12,6 +16,27 @@ let maxImageHeight = 0;
 
 let currentImageWidth = 0;
 let currentSpriteSheetProperties = {};
+
+let axisVisibilitySelector = document.getElementById("axis_visibility");
+axisVisibilitySelector.onchange = function () {
+  if (axisVisibilitySelector.checked === true) {
+    drawAxis();
+  } else {
+    clearAxis();
+  }
+};
+
+let axisOverlay = document.getElementById("axis_overlay");
+axisOverlay.onchange = function () {
+  if (axisOverlay.checked === true) {
+    auxillarySubcanvas.style.zIndex = 1;
+  } else {
+    auxillarySubcanvas.style.zIndex = -1;
+  }
+};
+
+let axisCorrectionX = 0;
+let axisCorrectionY = 0;
 
 function toArrayBuffer() {
   let tmp;
@@ -40,6 +65,8 @@ function setCanvasSize() {
 
   auxillaryCanvas.width = maxImageWidth * rect_size * array.length;
   auxillaryCanvas.height = maxImageHeight * rect_size;
+  auxillarySubcanvas.width = maxImageWidth * rect_size * array.length;
+  auxillarySubcanvas.height = maxImageHeight * rect_size;
 }
 
 function convert() {
@@ -138,6 +165,60 @@ function shiftFrameLeft() {
   ctxAux.putImageData(frameData, currentSpriteSheetProperties.frameWidth * frameEditor_frameNumber, 0);
 }
 
-function showAxis() {
-  return;
+function drawAxis() {
+  let midX = 0;
+  let midY = 0;
+
+  if (axisVisibilitySelector.checked === true) {
+    midX = currentSpriteSheetProperties.frameWidth / 2 + axisCorrectionX;
+    midY = currentSpriteSheetProperties.frameHeight / 2 + axisCorrectionY;
+
+    ctxSubAux.lineWidth = 1;
+    ctxSubAux.beginPath();
+    ctxSubAux.moveTo(0, midY + axisCorrectionY);
+    ctxSubAux.lineTo(currentSpriteSheetProperties.totalWidth, midY + axisCorrectionY);
+    ctxSubAux.stroke();
+
+    for (let i = 0; i < currentSpriteSheetProperties.frames; i++) {
+      ctxSubAux.beginPath();
+      ctxSubAux.moveTo(midX + axisCorrectionX + currentSpriteSheetProperties.frameWidth * i, 0);
+      ctxSubAux.lineTo(midX + axisCorrectionX + currentSpriteSheetProperties.frameWidth * i, currentSpriteSheetProperties.frameHeight);
+      ctxSubAux.stroke();
+    }
+  }
+}
+
+function clearAxis() {
+  ctxSubAux.reset();
+}
+
+function moveMainAxisUp() {
+  axisCorrectionY -= 1;
+  clearAxis();
+  drawAxis();
+}
+
+function moveMainAxisDown() {
+  axisCorrectionY += 1;
+  clearAxis();
+  drawAxis();
+}
+
+function moveCrossAxisLeft() {
+  axisCorrectionX -= 1;
+  clearAxis();
+  drawAxis();
+}
+
+function moveCrossAxisRight() {
+  axisCorrectionX += 1;
+  clearAxis();
+  drawAxis();
+}
+
+function resetAxis() {
+  axisCorrectionX = 0;
+  axisCorrectionY = 0;
+  clearAxis();
+  drawAxis();
 }

@@ -16,12 +16,44 @@
       <button onclick="saveMainCanvas()">Save main canvas</button>
       <button onclick="loadMainCanvas()">Load saved canvas</button>
     </div>
-    <div id="animation_preview">
+    <div id="animation_preview" class="dragable">
       <span>Now it`s dragable</span>
       <canvas id="animation_canvas" width="100px" height="100px"></canvas>
       <button onclick="startAnimation()">Start</button>
       <button onclick="stopAnimation()">Stop</button>
       <input id="time_between_frames" type="number" min="10" step="1" onchange="setTimeBetweenFrames()" />
+    </div>
+    <div id="axis_control" class="dragable">
+      <input type="checkbox" id="axis_visibility" />Show axis <input type="checkbox" id="axis_overlay" />Show axis over image
+      <div>
+        <button onclick="moveMainAxisUp()">X Up</button>
+        <button onclick="moveMainAxisDown()">X Down</button>
+      </div>
+      <div>
+        <button onclick="moveCrossAxisLeft()">Y Left</button>
+        <button onclick="moveCrossAxisRight()">Y Right</button>
+      </div>
+      <button onclick="resetAxis()">Reset</button>
+    </div>
+    <div id="animation_name_constructor">
+      <select>
+        <option value="ARCHER">ARCHER</option>
+      </select>
+      <select>
+        <option value="IDLE">IDLE</option>
+        <option value="MOVE">MOVE</option>
+        <option value="ATTACK">ATTACK</option>
+      </select>
+      <select>
+        <option value="NORD">NORD</option>
+        <option value="EAST">EAST</option>
+        <option value="SOUTH">SOUTH</option>
+        <option value="WEST">WEST</option>
+        <option value="NORDEAST">NORDEAST</option>
+        <option value="SOUTHEAST">SOUTHEAST</option>
+        <option value="SOUTHWEST">SOUTHWEST</option>
+        <option value="NORDWEST">NORDWEST</option>
+      </select>
     </div>
     <div id="frame_editor">
       <button id="frame_editor_button_up" onclick="shiftFrameUp()">↑</button>
@@ -30,7 +62,10 @@
       <button id="frame_editor_button_right" onclick="shiftFrameRight()">→</button>
       <button id="frame_editor_button_down" onclick="shiftFrameDown()">↓</button>
     </div>
+
     <canvas id="auxillary_canvas"></canvas>
+    <canvas id="auxillary_subcanvas"></canvas>
+
     <div id="main_canvas_wrapper">
       <canvas id="main_canvas"></canvas>
       <div id="spritesheets_labels"></div>
