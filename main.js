@@ -4,9 +4,19 @@ let imageDataArray = [];
 function addToMainCanvas() {
   let imageToTransfer = ctxAux.getImageData(0, 0, currentSpriteSheetProperties.totalWidth, currentSpriteSheetProperties.frameHeight);
   imageToTransfer.frameWidth = currentSpriteSheetProperties.frameWidth;
+  imageToTransfer.animationName = getAnimationName();
   imageDataArray.push(imageToTransfer);
 
   redrawMainCanvas();
+}
+
+function getAnimationName() {
+  let character = document.getElementById("animation_name_character");
+  let type = document.getElementById("animation_name_type");
+  let direction = document.getElementById("animation_name_direction");
+  let animationName = character.value + "_" + type.value + "_" + direction.value;
+
+  return animationName;
 }
 
 function addSpriteSheetLabel(id, top) {
@@ -43,6 +53,8 @@ function editImageDataElement(event) {
   clearAuxillaryCanvas();
   auxillaryCanvas.width = imageDataArray[elem].width;
   auxillaryCanvas.height = imageDataArray[elem].height;
+  auxillarySubcanvas.width = imageDataArray[elem].width;
+  auxillarySubcanvas.height = imageDataArray[elem].height;
 
   ctxAux.putImageData(imageDataArray[elem], 0, 0);
 
@@ -55,11 +67,68 @@ function editImageDataElement(event) {
 }
 
 function saveMainCanvas() {
-  return;
+  let coords = [];
+  let currentY = 0;
+
+  for (let i = 0; i < imageDataArray.length; i++) {
+    let elem = {};
+    elem.start_x = 0;
+    elem.start_y = 0 || currentY;
+    elem.width = imageDataArray[i].width;
+    elem.height = imageDataArray[i].height;
+    elem.frameWidth = imageDataArray[i].frameWidth;
+    elem.animationName = imageDataArray[i].animationName;
+    coords.push(elem);
+    currentY += imageDataArray[i].height;
+  }
+
+  let json = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(coords));
+  let link = document.createElement("a");
+  link.setAttribute("download", "coords.txt");
+  link.href = json;
+  document.body.append(link);
+  link.click();
+
+  let canvasURL = mainCanvas.toDataURL();
+  link.setAttribute("download", "spritesheet.png");
+  link.href = canvasURL;
+  link.click();
+  link.remove();
 }
 
 function loadMainCanvas() {
-  return;
+  let spriteSheetInput = document.getElementById("spriteSheetInput");
+  let coordinatesInput = document.getElementById("coordinatesInput");
+
+  if (spriteSheetInput.files[0] && coordinatesInput.files[0]) {
+    let imgReader = new FileReader();
+    imgReader.onloadend = function () {
+      let img = new Image();
+      img.onload = function () {
+        mainCanvas.width = img.width;
+        mainCanvas.height = img.height;
+        ctxMain.clearRect(0, 0, img.width, img.height);
+        ctxMain.drawImage(img, 0, 0);
+
+        let coordReader = new FileReader();
+        coordReader.onloadend = function () {
+          let coords = JSON.parse(coordReader.result);
+          for (let elem of coords) {
+            let imageToTransfer = ctxMain.getImageData(elem.start_x, elem.start_y, elem.width, elem.height);
+            imageToTransfer.frameWidth = elem.frameWidth;
+            imageToTransfer.animationName = elem.animationName;
+            imageDataArray.push(imageToTransfer);
+          }
+          redrawMainCanvas();
+        };
+
+        coordReader.readAsText(coordinatesInput.files[0]);
+      };
+      img.src = imgReader.result;
+    };
+
+    imgReader.readAsDataURL(spriteSheetInput.files[0]);
+  }
 }
 
 document.addEventListener("mousedown", (event) => {

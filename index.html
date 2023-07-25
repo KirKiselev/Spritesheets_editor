@@ -14,6 +14,8 @@
       <button onclick="clearAuxillaryCanvas()">Clear</button>
       <button onclick="addToMainCanvas()">Add to main</button>
       <button onclick="saveMainCanvas()">Save main canvas</button>
+      <input type="file" id="spriteSheetInput" />
+      <input type="file" id="coordinatesInput" />
       <button onclick="loadMainCanvas()">Load saved canvas</button>
     </div>
     <div id="animation_preview" class="dragable">
@@ -36,15 +38,15 @@
       <button onclick="resetAxis()">Reset</button>
     </div>
     <div id="animation_name_constructor">
-      <select>
+      <select id="animation_name_character">
         <option value="ARCHER">ARCHER</option>
       </select>
-      <select>
+      <select id="animation_name_type">
         <option value="IDLE">IDLE</option>
         <option value="MOVE">MOVE</option>
         <option value="ATTACK">ATTACK</option>
       </select>
-      <select>
+      <select id="animation_name_direction">
         <option value="NORD">NORD</option>
         <option value="EAST">EAST</option>
         <option value="SOUTH">SOUTH</option>
@@ -55,7 +57,7 @@
         <option value="NORDWEST">NORDWEST</option>
       </select>
     </div>
-    <div id="frame_editor">
+    <div id="frame_editor" class="dragable">
       <button id="frame_editor_button_up" onclick="shiftFrameUp()">↑</button>
       <button id="frame_editor_button_left" onclick="shiftFrameLeft()">←</button>
       <button id="frame_editor_button_close" onclick="closeFrameEditor()">X</button>

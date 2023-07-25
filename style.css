@@ -32,7 +32,7 @@
 
 #auxillary_canvas {
   position: absolute;
-  top: 260px;
+  top: 300px;
   left: 30px;
   border: 1px solid black;
   margin: 10px;
@@ -41,7 +41,7 @@
 
 #auxillary_subcanvas {
   position: absolute;
-  top: 260px;
+  top: 300px;
   left: 30px;
   border: 1px solid green;
   margin: 10px;

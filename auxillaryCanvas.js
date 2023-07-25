@@ -100,8 +100,8 @@ function clearAuxillaryCanvas() {
 function setFrameToEdit(e) {
   if (currentSpriteSheetProperties.frames != undefined) {
     frameEditor_frameNumber = Math.floor(e.offsetX / currentSpriteSheetProperties.frameWidth);
-    frameEditor.style.top = 140 + currentSpriteSheetProperties.frameHeight + "px";
-    frameEditor.style.left = currentSpriteSheetProperties.frameWidth * frameEditor_frameNumber + "px";
+    frameEditor.style.top = e.pageY + 50 + "px";
+    frameEditor.style.left = e.pageX - 30 + "px";
     frameEditor.style.visibility = "visible";
   }
 }
